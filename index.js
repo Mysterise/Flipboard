@@ -1,6 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var express = require('express');
 
 app.use('/static', express.static(__dirname + '/static'));
 app.get('/', function(req, res){
@@ -18,7 +19,7 @@ io.on('connection', function(socket){
 		});
     socket.on('chat message', function(msg){
       io.emit('chat message', {
-      	name: users[socket.id].name
+      	//name: users[socket.id].name,
       	message: msg
       });
     });
@@ -27,4 +28,3 @@ io.on('connection', function(socket){
 http.listen(3000, function() {
   console.log('listening on *:3000');
 });
-    
