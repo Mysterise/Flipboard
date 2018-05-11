@@ -6,13 +6,21 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+var users = {};
+
 io.on('connection', function(socket){
+	socket.on('new user', function(name) {
+		users[socket.id] = {
+			name: name
+		};
+		io.emit('status', name+" has joined the chatroom");
+	});
     socket.on('chat message', function(msg){
       io.emit('chat message', msg);
     });
 });
 
-http.listen(3000, function(){
+http.listen(3000, function() {
   console.log('listening on *:3000');
 });
     
