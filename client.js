@@ -8,7 +8,7 @@ $(function () {
     });
 
     socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append('<li>' + msg + '</li>');
     });
 
     socket.on('status', function(msg){
