@@ -10,6 +10,7 @@ var users = {};
 var names = [];
 
 io.on('connection', function(socket){
+	socket.on('return cookie', function()
 	socket.on('new user', function(session_id) {
 		// If user has no existing cookie - i.e. new user
 		if (session_id == "") { 

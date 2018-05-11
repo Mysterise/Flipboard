@@ -1,8 +1,23 @@
 {
-  "name": "faceless-chat",
-  "version": "0.0.1",
-  "description": "faceless-anon-course-chat",
+  "name": "facelesschat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mysterise/FacelessChat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mysterise/FacelessChat/issues"
+  },
+  "homepage": "https://github.com/Mysterise/FacelessChat#readme",
   "dependencies": {
+    "express": "^4.16.3",
     "socket.io": "^2.1.0"
   }
 }
