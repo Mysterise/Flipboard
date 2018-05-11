@@ -42,7 +42,9 @@ io.on('connection', function(socket){
 		socket.emit('setCookie', userData);
 		messages.forEach(function(entry) {
 			//console.log(entry);
-			socket.emit('chat message', entry.name, entry.message);
+			socket.emit('status', "You have joined the chatroom");
+			socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
+
 		});
 		io.emit('status', 'new user joined: ' + userData.name);
 	});
@@ -52,7 +54,8 @@ io.on('connection', function(socket){
 		messages.forEach(function(entry) {
 			socket.emit('chat message', entry.name, entry.message);
 		});
-		io.emit('status', userData.name + " has joined the chatroom");
+		socket.emit('status', "You have joined the chatroom");
+		socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
 	})
 
     socket.on('chat message', function(msg, userData) {

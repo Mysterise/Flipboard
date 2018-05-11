@@ -23,20 +23,23 @@ $(function () {
     socket.on('chat message', function(name, msg){
         var toAppend = `<div class="chat">`;
         if (JSON.parse($.cookie('user')).name == name) {
-            toAppend += `<div class="yours messages">`;
-        } else {
             toAppend += `<div class="mine messages">`;
-        }
-        toAppend += `<div class="span" style="size:10">` + name + `</div>
+            toAppend += `<div class="message">` + msg + `</div>
+            </div>
+        </div>`;
+        } else {
+            toAppend += `<div class="yours messages">`;
+            toAppend += `<span style="font-size:10px;text-indent:15px;color:grey">` + name + `</span>
                 <div class="message">` + msg + `</div>
             </div>
         </div>`;
+        }
 
         $('#messages').append(toAppend);
     });
 
     socket.on('status', function(msg){
-        $('#messages').append(msg);
+        $('#messages').append(`<p><span style="font-size:12px;color:grey">` + msg + `</span></p>`);
     });
 
     socket.on('setCookie', function(user){
