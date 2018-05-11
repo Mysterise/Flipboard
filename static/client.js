@@ -14,4 +14,8 @@ $(function () {
     socket.on('status', function(msg){
         $('#messages').append($('<li>').text(msg));
     });
+
+    socket.on('setCookie', function(name){
+        $.cookie('name', name);
+    })
 });
