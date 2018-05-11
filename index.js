@@ -15,7 +15,6 @@ class User {
 	constructor(name) {
 		this.name = name;
 	}
-
 }
 
 
@@ -31,7 +30,6 @@ var messages = [];
 io.on('connection', function(socket){
 	socket.on('new user', function(session_id) {
 		// If user has no existing cookie - i.e. new user
-		console.log("we did niggas first");
 		var name = "Anon" + Math.floor((Math.random()*1000)+1);
 		while (names.indexOf(name) >= 0) {
 			name = "Anon" + Math.floor((Math.random()*1000)+1);
@@ -44,27 +42,22 @@ io.on('connection', function(socket){
 			//console.log(entry);
 			socket.emit('status', "You have joined the chatroom");
 			socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
-
 		});
 		io.emit('status', 'new user joined: ' + userData.name);
 	});
 	// If user has an existing cookie - i.e. returning user
 	socket.on('existing user', function(userData) {
-
 		messages.forEach(function(entry) {
 			socket.emit('chat message', entry.name, entry.message);
 		});
 		socket.emit('status', "You have joined the chatroom");
 		socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
 	})
-
     socket.on('chat message', function(msg, userData) {
-
 	  let m = new Message(userData.name, (new Date()).toISOString(), msg)
       io.emit('chat message', m.name, m.message); // Where message gets broadcast
       messages.push(m);
     });
-    
 });
 
 http.listen(3000, function() {

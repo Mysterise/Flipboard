@@ -1,6 +1,6 @@
 
-
 $(function () {
+
     var socket = io();
     if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
         console.log("THERE IS NO COOKIE NIGGA");
@@ -21,21 +21,95 @@ $(function () {
     
 
     socket.on('chat message', function(name, msg){
-        var toAppend = `<div class="chat">`;
+        //var toAppend = `<div class="chat draggable cloneable">`;
+        var toAppend = $("<div></div>");
+        $(toAppend).addClass("chat draggable cloneable");
+        var message_box = $("<div></div>");
+        var message = $("<div></div>").html(msg);
+        var name_span = $("<span></span>").html(name);
+
         if (JSON.parse($.cookie('user')).name == name) {
-            toAppend += `<div class="mine messages">`;
-            toAppend += `<div class="message">` + msg + `</div>
-            </div>
-        </div>`;
+            $(message_box).addClass("mine messages");
+            $(message).addClass("message");
         } else {
-            toAppend += `<div class="yours messages">`;
-            toAppend += `<span style="font-size:10px;text-indent:15px;color:grey">` + name + `</span>
-                <div class="message">` + msg + `</div>
-            </div>
-        </div>`;
+            $(message_box).addClass("yours messages");
+            $(message).addClass("message");
         }
+        
+        $(message_box).append(name_span);
+        $(message_box).append(message);
+        $(toAppend).append(message_box);
+          
+        interact('.draggable').draggable({
+          'manualStart' : true,      
+          'onmove' : function (event) {
+
+            var target = event.target;
+
+            var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+            var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+            // translate the element
+            target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+            console.log(x, y);
+            // update the posiion attributes
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+
+          },
+          'onend' : function (event) {
+            //$("body").remove(event.target);
+            $('#clipboard').append(event.target);
+            $(event.target).offset({top: $(event.target).offset().top - $(window).scrollTop(), left: $(event.target).offset().left - $("#clipboard").width()});
+            $("#clipboard").animate({left: "80vw"});
+            console.log('Draggable: ', event);
+
+          }
+        }).on('move', function (event) {
+          var interaction = event.interaction;
+
+          // if the pointer was moved while being held down
+          // and an interaction hasn't started yet
+          if (interaction.pointerIsDown && !interaction.interacting() && event.currentTarget.classList.contains('cloneable')) {
+
+            console.log("MOVING");
+            var original = event.currentTarget;
+            console.log("original", original);
+
+            var x = $(original).offset().left;//(parseFloat(original.getAttribute('data-x')) || 0) + event.dx;
+            var y = $(original).offset().top;//(parseFloat(original.getAttribute('data-y')) || 0) + event.dy;
+
+            //console.log(original.getAttribute('data-x'));
+            //console.log(original.getAttribute('x'));
+            
+            // create a clone of the currentTarget element
+            var clone = event.currentTarget.cloneNode(true);
+            $(clone).removeClass("cloneable");
+            console.log(clone);
+            clone.setAttribute('style', 'position: absolute');
+              
+            // insert the clone to the page
+            // TODO: position the clone appropriately
+            $("body").append(clone);
+
+            // update the posiion attributes
+            //clone.setAttribute('data-x', x);
+            //clone.setAttribute('data-y', y);
+            $(clone).offset({top: y, left: x});
+
+            // start a drag interaction targeting the clone
+            interaction.start({ name: 'drag' }, event.interactable, clone);
+
+            $("#clipboard").animate({left: "50vw"});
+          } else {
+            interaction.start({ name: 'drag' }, event.interactable, event.currentTarget);
+          }
+
+        });
 
         $('#messages').append(toAppend);
+        $("html, body").stop();
+        $("html, body").animate({ scrollTop: $(document).height() }, 300);
     });
 
     socket.on('status', function(msg){
@@ -46,4 +120,9 @@ $(function () {
         console.log(JSON.stringify(user));
         $.cookie('user', JSON.stringify(user));
     })
+
+
+
+
+
 });
