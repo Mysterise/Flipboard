@@ -30,7 +30,7 @@ io.on('connection', function(socket){
 			name = "Anon" + Math.floor((Math.random()*1000)+1);
 		}
 		users[socket.id] = {
-			name: name
+			name: name,
 		};
 		socket.emit('setCookie', name);
 		messages.forEach(function(entry) {
@@ -52,14 +52,15 @@ io.on('connection', function(socket){
 	// If user has an existing cookie - i.e. returning user
 	socket.on('existing user', function(name) {
 		io.emit('status', name + " has joined the chatroom");
-	});
+		
+	})
 
     socket.on('chat message', function(msg){
       console.log(users[socket.id]);
-	  let gay = new Message(users[socket.id], (new Date()).toISOString(), msg)
-	  console.log(gay);
-      io.emit('chat message', gay.user.name + ": " + gay.message); // Where message gets broadcast
-      messages.push(gay);
+	  let m = new Message(users[socket.id], (new Date()).toISOString(), msg)
+	  console.log(m);
+      io.emit('chat message', m.user.name,  m.message); // Where message gets broadcast
+      messages.push(m);
     });
     
 });
