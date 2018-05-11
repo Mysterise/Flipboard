@@ -16,20 +16,25 @@ $(function () {
         socket.emit('chat message', $('#m').val(), JSON.parse($.cookie('user')));
         $('#m').val('');
         return false;
-    }); 
+    });
 
-    
+
 
     socket.on('chat message', function(name, msg){
         var toAppend = `<div class="chat">`;
         if (JSON.parse($.cookie('user')).name == name) {
             toAppend += `<div class="mine messages">`;
+<<<<<<< Updated upstream
             toAppend += `<div class="message">` + msg + `</div>
             </div>
         </div>`;
         } else {
             toAppend += `<div class="yours messages">`;
             toAppend += `<span style="font-size:10px;text-indent:15px;color:grey">` + name + `</span>
+=======
+        }
+        toAppend += `<div class="span" style="size:20">` + name + `</div>
+>>>>>>> Stashed changes
                 <div class="message">` + msg + `</div>
             </div>
         </div>`;
