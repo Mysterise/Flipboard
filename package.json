@@ -1,0 +1,8 @@
+{
+  "name": "faceless-chat",
+  "version": "0.0.1",
+  "description": "faceless-anon-course-chat",
+  "dependencies": {
+    "socket.io": "^2.1.0"
+  }
+}
