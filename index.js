@@ -43,7 +43,7 @@ io.on('connection', function(socket){
 
 		users[socket.id] = {
 			name: name
-		};
+		}; 
 
 		socket.emit('setCookie', name);
 		console.log('new user:' + name + 'socket.id =' + socket.id);
