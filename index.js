@@ -4,8 +4,8 @@ var io = require('socket.io')(http);
 var express = require('express');
 
 class Message {
-	constructor(user, date, message) {
-		this.user = user;
+	constructor(name, date, message) {
+		this.name = name;
 		this.date = date;
 		this.message = message;
 	}
@@ -49,6 +49,7 @@ io.on('connection', function(socket){
 	});
 	// If user has an existing cookie - i.e. returning user
 	socket.on('existing user', function(userData) {
+
 		messages.forEach(function(entry) {
 			try{socket.emit('chat message', entry.user.name + ": " + entry.message);}
 			catch(err){;}
@@ -56,8 +57,8 @@ io.on('connection', function(socket){
 		io.emit('status', userData.name + " has joined the chatroom");
 	})
 
-    socket.on('chat message', function(msg, userData){
-    	console.log(userData.name + "hoello niggas");
+    socket.on('chat message', function(msg, userData) {
+
 	  let m = new Message(userData.name, (new Date()).toISOString(), msg)
       io.emit('chat message', m.name, m.message); // Where message gets broadcast
       messages.push(m);

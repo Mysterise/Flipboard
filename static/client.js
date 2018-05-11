@@ -8,13 +8,14 @@ $(function () {
         socket.emit('new user');
     } else {
         console.log("THERE IS A COOKIE NIGGA");
-        socket.emit('existing user', $.cookie('user'));
+        socket.emit('existing user', JSON.parse($.cookie('user')));
     }
 
 
     // Submitting a post/chat
     $('form').submit(function() {
-        socket.emit('chat message', $('#m').val(), $.cookie('user'));
+        //console.log(JSON.stringify($.cookie('user')));
+        socket.emit('chat message', $('#m').val(), JSON.parse($.cookie('user')));
         $('#m').val('');
         return false;
     }); 
@@ -25,7 +26,7 @@ $(function () {
         $('#messages').append(`
             <div>
                 <li>` + name + `</li>
-                <li>` + msg + `</li>
+                <li>` + message + `</li>
             </div>
         `);
     });
@@ -35,6 +36,7 @@ $(function () {
     });
 
     socket.on('setCookie', function(user){
-        $.cookie('user', user);
+        console.log(JSON.stringify(user));
+        $.cookie('user', JSON.stringify(user));
     })
 });
