@@ -3,23 +3,25 @@
 $(function () {
 
     var socket = io();
-    if ($.cookie('name') == null || $.cookie('name') == 'AnonNaN') {
+    if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
+        console.log("THERE IS NO COOKIE NIGGA");
         socket.emit('new user');
     } else {
-        socket.emit('existing user', $.cookie('name'));
+        console.log("THERE IS A COOKIE NIGGA");
+        socket.emit('existing user', $.cookie('user'));
     }
-    console.log($.cookie('name'));
+
 
     // Submitting a post/chat
     $('form').submit(function() {
-        socket.emit('chat message', $('#m').val(), $.cookie('name'));
+        socket.emit('chat message', $('#m').val(), $.cookie('user'));
         $('#m').val('');
         return false;
     }); 
 
     
 
-    socket.on('chat message', function(msg, name){
+    socket.on('chat message', function(name, message){
         $('#messages').append(`
             <div>
                 <li>` + name + `</li>
@@ -32,7 +34,7 @@ $(function () {
         $('#messages').append(`<li>` + msg + `</li>`);
     });
 
-    socket.on('setCookie', function(name){
-        $.cookie('name', name);
+    socket.on('setCookie', function(user){
+        $.cookie('user', user);
     })
 });
