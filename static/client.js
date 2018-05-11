@@ -1,44 +1,42 @@
 
 
 $(function () {
-    var global_name = "";
+
     var socket = io();
-    if ($.cookie('name') == null || $.cookie('name') == 'AnonNaN') {
+    if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
+        console.log("THERE IS NO COOKIE NIGGA");
         socket.emit('new user');
     } else {
-        socket.emit('existing user', $.cookie('name'));
+        console.log("THERE IS A COOKIE NIGGA");
+        socket.emit('existing user', JSON.parse($.cookie('user')));
     }
-    console.log($.cookie('name'));
+
 
     // Submitting a post/chat
     $('form').submit(function() {
-        socket.emit('chat message', $('#m').val(), $.cookie('name'));
+        //console.log(JSON.stringify($.cookie('user')));
+        socket.emit('chat message', $('#m').val(), JSON.parse($.cookie('user')));
         $('#m').val('');
         return false;
     }); 
 
     
 
-    socket.on('chat message', function(name, msg){
-        var toAppend = `
+    socket.on('chat message', function(name, message){
+        $('#messages').append(`
             <div>
-                <div class="message_bubble white">` + name + `</div>
-                <div class="message_bubble`;
-        if (global_name == name) {
-            toAppend += " right";
-        } 
-        toAppend += `">` + msg + `</div>
+                <li>` + name + `</li>
+                <li>` + message + `</li>
             </div>
-        `;
-
-        $('#messages').append(toAppend);
+        `);
     });
 
     socket.on('status', function(msg){
-        $('#messages').append(msg);
+        $('#messages').append(`<li>` + msg + `</li>`);
     });
 
-    socket.on('setCookie', function(name){
-        $.cookie('name', name);
+    socket.on('setCookie', function(user){
+        console.log(JSON.stringify(user));
+        $.cookie('user', JSON.stringify(user));
     })
 });
