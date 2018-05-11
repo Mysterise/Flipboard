@@ -1,7 +1,6 @@
 
 
 $(function () {
-    var global_name = "";
     var socket = io();
     if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
         console.log("THERE IS NO COOKIE NIGGA");
@@ -22,16 +21,16 @@ $(function () {
     
 
     socket.on('chat message', function(name, msg){
-        var toAppend = `
-            <div>
-                <div class="message_bubble white">` + name + `</div>
-                <div class="message_bubble`;
-        if (global_name == name) {
-            toAppend += " right";
-        } 
-        toAppend += `">` + msg + `</div>
+        var toAppend = `<div class="chat">`;
+        if (JSON.parse($.cookie('user')).name == name) {
+            toAppend += `<div class="yours messages">`;
+        } else {
+            toAppend += `<div class="mine messages">`;
+        }
+        toAppend += `<div class="span" style="size:10">` + name + `</div>
+                <div class="message">` + msg + `</div>
             </div>
-        `;
+        </div>`;
 
         $('#messages').append(toAppend);
     });

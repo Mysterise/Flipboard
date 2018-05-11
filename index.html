@@ -3,6 +3,7 @@
   <head>
     <title>Socket.IO chat</title>
     <link href="static/w3.css" rel="stylesheet" type="text/css" />
+    <link href="static/messages.css" rel="stylesheet" type="text/css" />
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -18,9 +19,6 @@
         word-wrap: break-word;
         padding: 6px;
       }
-      .right {
-        float: right;
-      }
       .white {
         background: white;
       }
@@ -34,8 +32,6 @@
     <div style="width: 100vw">
       <!--<div class="w3-container w3-cell w3-border-red" style="width: 30vw">&nbsp;</div>-->
       <div id="messages" style="width: 40vw"></div>
-
-      </div>
       <!--<div class="w3-container w3-cell w3-border-blue" style="width: 30vw">&nbsp;</div>-->
     </div>
     <form action="">
@@ -43,3 +39,4 @@
     </form>
   </body>
 </html>
+

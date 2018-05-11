@@ -41,9 +41,8 @@ io.on('connection', function(socket){
 		// Puts the user information into cookie
 		socket.emit('setCookie', userData);
 		messages.forEach(function(entry) {
-			console.log(entry);
-			try{socket.emit('chat message', entry.user.name + ": " + entry.message);}
-			catch(err){;}
+			//console.log(entry);
+			socket.emit('chat message', entry.name, entry.message);
 		});
 		io.emit('status', 'new user joined: ' + userData.name);
 	});
@@ -51,8 +50,7 @@ io.on('connection', function(socket){
 	socket.on('existing user', function(userData) {
 
 		messages.forEach(function(entry) {
-			try{socket.emit('chat message', entry.user.name + ": " + entry.message);}
-			catch(err){;}
+			socket.emit('chat message', entry.name, entry.message);
 		});
 		io.emit('status', userData.name + " has joined the chatroom");
 	})
