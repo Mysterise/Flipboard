@@ -12,6 +12,8 @@ $(function () {
 
     if ($.cookie('name') == null || $.cookie('name') == 'AnonNaN') {
         socket.emit('new user', "");
+    } else {
+        socket.emit('existing user', $.cookie('name'));
     }
     console.log($.cookie('name'));
 
