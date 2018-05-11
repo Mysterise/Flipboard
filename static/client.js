@@ -1,7 +1,7 @@
 
 
 $(function () {
-
+    var global_name = "";
     var socket = io();
     if ($.cookie('name') == null || $.cookie('name') == 'AnonNaN') {
         socket.emit('new user');
@@ -19,17 +19,23 @@ $(function () {
 
     
 
-    socket.on('chat message', function(msg, name){
-        $('#messages').append(`
+    socket.on('chat message', function(name, msg){
+        var toAppend = `
             <div>
-                <li>` + name + `</li>
-                <li>` + msg + `</li>
+                <div class="message_bubble white">` + name + `</div>
+                <div class="message_bubble`;
+        if (global_name == name) {
+            toAppend += " right";
+        } 
+        toAppend += `">` + msg + `</div>
             </div>
-        `);
+        `;
+
+        $('#messages').append(toAppend);
     });
 
     socket.on('status', function(msg){
-        $('#messages').append(`<li>` + msg + `</li>`);
+        $('#messages').append(msg);
     });
 
     socket.on('setCookie', function(name){

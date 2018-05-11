@@ -23,7 +23,7 @@ var names = [];
 var messages = [];
 
 io.on('connection', function(socket){
-	socket.on('new user', function(session_id) {
+	socket.on('new user', function() {
 		// If user has no existing cookie - i.e. new user
 		var name = "Anon" + Math.floor((Math.random()*1000)+1);
 		while (names.indexOf(name) >= 0) {
@@ -55,13 +55,13 @@ io.on('connection', function(socket){
 		
 	})
 
-    socket.on('chat message', function(msg){
-      console.log(users[socket.id]);
-	  let m = new Message(users[socket.id], (new Date()).toISOString(), msg)
-	  console.log(m);
-      io.emit('chat message', m.user.name,  m.message); // Where message gets broadcast
-      messages.push(m);
-    });
+	socket.on('chat message', function(msg){
+		console.log(users[socket.id]);
+	let m = new Message(users[socket.id], (new Date()).toISOString(), msg)
+	console.log(m);
+		io.emit('chat message', "Anon123",  m.message); // Where message gets broadcast
+		messages.push(m);
+	});
     
 });
 
