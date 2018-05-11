@@ -3,16 +3,18 @@
 $(function () {
     var global_name = "";
     var socket = io();
-    if ($.cookie('name') == null || $.cookie('name') == 'AnonNaN') {
+    if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
+        console.log("THERE IS NO COOKIE NIGGA");
         socket.emit('new user');
     } else {
-        socket.emit('existing user', $.cookie('name'));
+        console.log("THERE IS A COOKIE NIGGA");
+        socket.emit('existing user', JSON.parse($.cookie('user')));
     }
-    console.log($.cookie('name'));
 
     // Submitting a post/chat
     $('form').submit(function() {
-        socket.emit('chat message', $('#m').val(), $.cookie('name'));
+        //console.log(JSON.stringify($.cookie('user')));
+        socket.emit('chat message', $('#m').val(), JSON.parse($.cookie('user')));
         $('#m').val('');
         return false;
     }); 
@@ -38,7 +40,8 @@ $(function () {
         $('#messages').append(msg);
     });
 
-    socket.on('setCookie', function(name){
-        $.cookie('name', name);
+    socket.on('setCookie', function(user){
+        console.log(JSON.stringify(user));
+        $.cookie('user', JSON.stringify(user));
     })
 });
