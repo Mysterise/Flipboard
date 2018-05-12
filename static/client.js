@@ -27,7 +27,13 @@ $(function () {
         return false;
     }); 
 
-    
+    $(".change-chat").on("click", function(){
+        var chat = $(this).attr("target-chat");
+        var chat_name = $(this).children(".chat-name").text();
+        $("#messages").empty();
+        $("#current_chat").text(chat_name);
+        $("#current_chat").attr("target-chat", chat);
+    });
 
     socket.on('chat message', function(name, msg){
         //var toAppend = `<div class="chat draggable cloneable">`;
@@ -50,8 +56,8 @@ $(function () {
         $(toAppend).append(message_box);
 
         $('#messages').append(toAppend);
-        $("html, body").stop();
-        $("html, body").animate({ scrollTop: $(document).height() }, 300);
+        $("#messages").stop();
+        $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight")}, 300);
     });
 
     socket.on('status', function(msg){
