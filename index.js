@@ -3,19 +3,37 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
 
+
+var messageID = 0;
 class Message {
-	constructor(name, date, message) {
+	constructor(name, date, message, messageID) {
 		this.name = name;
 		this.date = date;
 		this.message = message;
+		this.messageID = messageID;
 	}
 }
 
-class User {
-	constructor(name) {
-		this.name = name;
-	}
-}
+    class User {
+        constructor(name) {
+            this.name = name;
+            this.clipboard = [];
+            // this.addClipping = function addClipping(clip) {
+            //     clipboard.push(clip);
+            // }
+        }
+
+       
+
+        removeClipping(clippingID) {
+            for (var i = 0; i < clipboard.length; i++) {
+                if (clipboard[i].clippingID == clippingID) {
+                    clipboard.splice(i, 1);
+                    break;
+                }
+            }
+        }
+     }
 
 
 app.use('/static', express.static(__dirname + '/static'));
@@ -29,33 +47,31 @@ var messages = [];
 
 io.on('connection', function(socket){
 	socket.on('new user', function(name) {
-		// If user has no existing cookie - i.e. new user
-		//var name = "Anon" + Math.floor((Math.random()*1000)+1);
-		//while (names.indexOf(name) >= 0) {
-		//	name = "Anon" + Math.floor((Math.random()*1000)+1);
-		//}
 		let userData = new User(name);
 
 		// Puts the user information into cookie
 		socket.emit('setCookie', userData);
 		messages.forEach(function(entry) {
-			//console.log(entry);
-			socket.emit('status', "You have joined the chatroom");
-			socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
-		});
-		io.emit('status', 'new user joined: ' + userData.name);
-	});
-	// If user has an existing cookie - i.e. returning user
-	socket.on('existing user', function(userData) {
-		messages.forEach(function(entry) {
-			socket.emit('chat message', entry.name, entry.message);
+			socket.emit('chat message', entry);
 		});
 		socket.emit('status', "You have joined the chatroom");
 		socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
-	})
+	});
+
+	// If user has an existing cookie - i.e. returning user
+	socket.on('existing user', function(userData) {
+		messages.forEach(function(entry) {
+			socket.emit('chat message', entry);
+		});
+		socket.emit('status', "You have joined the chatroom");
+		socket.broadcast.emit('status', userData.name + "has joined the chatroom\n");
+	});
+
     socket.on('chat message', function(msg, userData) {
-	  let m = new Message(userData.name, (new Date()).toISOString(), msg)
-      io.emit('chat message', m.name, m.message); // Where message gets broadcast
+    	console.log(userData);
+
+	  let m = new Message(userData.name, (new Date()).toISOString(), msg, messageID++)
+      io.emit('chat message', m); // Where message gets broadcast
       messages.push(m);
     });
 });
