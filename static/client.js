@@ -22,7 +22,15 @@ $(function () {
     // Submitting a post/chat
     $('form').submit(function() {
         //console.log(JSON.stringify($.cookie('user')));
-        socket.emit('chat message', $('#m').val(), JSON.parse($.cookie('user')));
+        var msg = $("#m").val();
+        var type = msg.split("::")[0];
+        var message = msg.split("::")[1];
+        if (type == "image") {
+            msg = "<img src='"+message+"' width='400' />";
+        } else if (type == "video") {
+            msg = "<video src='"+message+"' width='400' controls></video>";
+        }
+        socket.emit('chat message', msg, JSON.parse($.cookie('user')));
         $('#m').val('');
         return false;
     }); 
