@@ -72,7 +72,7 @@ $(function () {
             if ($(event.target).offset().left < $("#clipboard").offset().left) {
                 $(event.target).remove();
             }
-            $("#clipboard").animate({left: "80vw"});
+            //$("#clipboard").animate({left: "80vw"});
             console.log('Draggable: ', event);
 
           }
@@ -111,7 +111,7 @@ $(function () {
             // start a drag interaction targeting the clone
             interaction.start({ name: 'drag' }, event.interactable, clone);
 
-            $("#clipboard").animate({left: "50vw"});
+            //$("#clipboard").animate({left: "50vw"});
           } else {
             interaction.start({ name: 'drag' }, event.interactable, event.currentTarget);
           }
