@@ -61,8 +61,27 @@ $(function () {
     socket.on('setCookie', function(user){
         console.log(JSON.stringify(user));
         $.cookie('user', JSON.stringify(user));
-    })
+    });
 
+    $("#btn_add_open").on("click", function() {
+        if ($("#btn_add_open").attr("opened") == "false") {
+            $(".btn_add_extra").fadeIn(300);
+            $("#btn_add_open").attr("opened", "true"); 
+        } else {
+            $(".btn_add_extra").fadeOut(300);
+            $("#btn_add_open").attr("opened", "false");
+        }
+    });
+
+    $("#btn_add_label").on("click", function() {
+        $("#clipboard").append(
+            $("<div></div>")
+                .attr("contenteditable", "true")
+                .css({"left":"10px","top":"40px"})
+                .html("Label")
+                .addClass("label draggable dropped")
+        )
+    });
 
     $("#clipboard").dblclick(function(e) {
         if(!$(e.target).hasClass("label")) {
