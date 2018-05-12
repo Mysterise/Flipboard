@@ -9,10 +9,10 @@
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; height: 46px; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; left: 20vw; width: 60vw; height: 46px; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; height: 40px; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; height: 40px; }
-      #messages {position: absolute; left: 0; top: 0; width: 80vw; height: Calc(100vh - 50px); z-index: -5; overflow-x: hidden; overflow-y: scroll;}
+      #messages {position: absolute; left: 20vw; top: 40px; width: 60vw; height: Calc(100vh - 90px); z-index: -5; overflow-x: hidden; overflow-y: scroll; border-left: 1px solid grey;}
       .message_bubble {
         color: #000;
         background: #BBB;
@@ -47,11 +47,26 @@
       </center>
     </div>
     <div id="messenger">
-      <div id="messages" onmouseover="$('#clipboard').stop();$('#clipboard').animate({left: '80vw'})"></div>
+      <div id="groups" style="width: 20vw">
+        <div style="height: 40px; line-height: 20px; vertical-align: middle; border-bottom: 1px solid lightgrey; position: absolute; top: 0; left: 0; width: 20vw;">
+          <center><h3>Chats</h3></center>
+        </div>
+        <div class="change-chat w3-hover-light-grey" style="margin-top: 40px; width: 100%; padding: 10px;" target-chat="fbhd">
+           <h5 class="chat-name">FB Hackathon Discussion</h5>
+           <h6>Chat group for 2018 FB hackathon</h6>
+        </div>
+        <div class="change-chat w3-hover-light-grey" style="width: 100%; padding: 10px;" target-chat="tony">
+           <h5 class="chat-name">Tony</h5>
+           <h6>Private chat with Tony</h6>
+        </div>
+      </div>
+      <div style="height: 40px; line-height: 40px; vertical-align: middle; font-size: 20px; width: 60vw; border-bottom: 1px solid lightgrey; position: absolute; top: 0; left: 20vw; border-left: 1px solid grey"><center><span id="current_chat" target-chat="fbhd">FB Hackathon Discussion</span></center></div>
+      <div id="messages" onmouseover="$('#clipboard').stop();$('#clipboard').animate({left: '80vw'})">
+      </div>
       <div id="clipboard" onmouseover="$(this).stop();$(this).animate({left: '50vw'})" style="width: 50vw">
-        <div id="clipboard_name" class="noselect">clipboard</div>
+        <div id="clipboard_name" class="noselect">flipboard</div>
         <div style="position: absolute; right: 0; top: 0" class="noselect">
-          <div id="btn_add_open" class="w3-bar-item btn_add w3-green w3-text-white" opened="false"><center><span style="font-size: 47px;">+</span></center></div>
+          <div id="btn_add_open" class="w3-bar-item btn_add w3-green w3-text-white" opened="false" style="margin-top: 10px; margin-right: 10px"><center><span style="font-size: 47px;">+</span></center></div>
           <div id="btn_add_list" class="w3-bar-item btn_add btn_add_extra w3-green w3-text-white"><center><span style="font-size: 15px; vertical-align: middle; line-height: 50px;">LIST</span></center></div>
           <div id="btn_add_folder" class="w3-bar-item btn_add btn_add_extra w3-green w3-text-white"><center><span style="font-size: 15px; vertical-align: middle; line-height: 50px;">FOLDER</span></center></div>
           <div id="btn_add_label" class="w3-bar-item btn_add btn_add_extra w3-green w3-text-white"><center><span style="font-size: 15px; vertical-align: middle; line-height: 50px;">LABEL</span></center></div>
