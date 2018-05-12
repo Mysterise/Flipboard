@@ -1,5 +1,7 @@
 #clipboard {
   background: #EA0;
+  background-image: url("notepaper.png");
+  background-size: cover;
   position: fixed;
   left: 80vw;
   top: 0;

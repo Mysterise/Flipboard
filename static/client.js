@@ -46,21 +46,32 @@ $(function () {
 
             var target = event.target;
 
-            var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-            var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+            //var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+            //var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+            var x = $(target).offset().left + event.dx;
+            var y = $(target).offset().top + event.dy;
 
             // translate the element
-            target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+            //target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+            $(target).offset({left: x, top: y});
             console.log(x, y);
             // update the posiion attributes
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
+            //target.setAttribute('data-x', x);
+            //target.setAttribute('data-y', y);
 
           },
           'onend' : function (event) {
-            //$("body").remove(event.target);
             $('#clipboard').append(event.target);
-            $(event.target).offset({top: $(event.target).offset().top - $(window).scrollTop(), left: $(event.target).offset().left - $("#clipboard").width()});
+            if ($(event.target).hasClass("dropped")) {
+                $(event.target).offset({top: $(event.target).offset().top - $(window).scrollTop(), left: $(event.target).offset().left});
+            } else {
+                $(event.target).offset({top: $(event.target).offset().top - $(window).scrollTop(), left: $(event.target).offset().left - $("#clipboard").width()});
+                $(event.target).addClass("dropped");
+            }
+            if ($(event.target).offset().left < $("#clipboard").offset().left) {
+                $(event.target).remove();
+            }
             $("#clipboard").animate({left: "80vw"});
             console.log('Draggable: ', event);
 
@@ -122,7 +133,17 @@ $(function () {
     })
 
 
-
+    $("#clipboard").dblclick(function(e) {
+        console.log("dblclicked");
+        console.log(e);
+        $("#clipboard").append(
+            $("<div></div>")
+                .attr("contenteditable", "true")
+                .css({"position":"absolute","left":e.offsetX,"top":e.offsetY,"z-index":20,"border":"1px solid grey","padding":"10px","width":"100px"})
+                .html("Label")
+                .addClass("draggable dropped")
+        );
+    });
 
 
 });
