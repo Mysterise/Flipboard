@@ -46,7 +46,7 @@ $(function () {
             userData.clipboard.forEach(function(data) {
                 var toAppend = $("<div></div>");
                 //console.log(messageData);
-                $(toAppend).addClass("chat draggable noselect cloneable");
+                $(toAppend).addClass("chat draggable noselect dropped");
 
                 var message_box = $("<div></div>");
                 var message = $("<div></div>").html(data.message);
@@ -91,9 +91,9 @@ $(function () {
 
     $(".change-chat").on("click", function(){
         var chat = $(this).attr("target-chat");
-        var chat_name = $(this).children(".chat-name").text();
+        var chat_name = $(this).children(".chat-name").html();
         $("#messages").empty();
-        $("#current_chat").text(chat_name);
+        $("#current_chat").html(chat_name);
         $("#current_chat").attr("target-chat", chat);
     });
 
@@ -191,7 +191,7 @@ $(function () {
             $(event.target).addClass("dropped");
             console.log($.cookie(name));
             let userData = JSON.parse($.cookie(name))
-            userData.clipboard.push((new Clipping($(event.target).attr("messageID"), $(event.target).offset().left, $(event.target).offset().top, clippingID, $(event.target).children().children(".message").text(),$(event.target).children().children(".name").text())));
+            userData.clipboard.push((new Clipping($(event.target).attr("messageID"), $(event.target).offset().left, $(event.target).offset().top, clippingID, $(event.target).children().children(".message").html(),$(event.target).children().children(".name").html())));
             $(event.target).attr("clippingID", clippingID++);
             $.cookie(name, JSON.stringify(userData));
             console.log($.cookie(name));
