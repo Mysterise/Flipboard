@@ -63,7 +63,8 @@ $(function () {
                 $(message_box).append(name_span);
                 $(message_box).append(message);
                 $(toAppend).append(message_box);
-                $(toAppend).css({"left":data.left, "top":data.top})
+                $(toAppend).css({"left":data.left, "top":data.top, "position":"absolute"})
+                $(toAppend).attr("clippingID", data.clippingID);
                 $('#clipboard').append(toAppend);
             }); 
         }
@@ -191,7 +192,7 @@ $(function () {
             $(event.target).addClass("dropped");
             console.log($.cookie(name));
             let userData = JSON.parse($.cookie(name))
-            userData.clipboard.push((new Clipping($(event.target).attr("messageID"), $(event.target).offset().left, $(event.target).offset().top, clippingID, $(event.target).children().children(".message").html(),$(event.target).children().children(".name").html())));
+            userData.clipboard.push((new Clipping($(event.target).attr("messageID"), $(event.target).offset().left - $("#clipboard").width(), $(event.target).offset().top - $(window).scrollTop(), clippingID, $(event.target).children().children(".message").html(),$(event.target).children().children(".name").html())));
             $(event.target).attr("clippingID", clippingID++);
             $.cookie(name, JSON.stringify(userData));
             console.log($.cookie(name));
