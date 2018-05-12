@@ -24,6 +24,9 @@
       .white {
         background: white;
       }
+      input {
+        margin-bottom: 10px;
+      }
     </style>
 
   </head>
@@ -32,7 +35,15 @@
   <script src="static/jquery.cookie.js"></script>
   <script src="static/client.js"></script>
   <body>
-    <div id="login_screen">
+    <div id="login_screen" class="w3-container w3-white">
+      <center>
+        <h1>Flipboard</h1>
+        <h4>Instantly take notes during conversations.</h4>
+        <h4>Sign in to get started.</h4>
+        <input class="w3-input w3-border w3-border-grey w3-round-medium w3-large" placeholder="Name" id="login_name" />
+        <input class="w3-input w3-border w3-border-grey w3-round-medium w3-large" placeholder="Password" />
+        <div class="w3-button w3-blue w3-text-bold w3-text-white w3-round-medium w3-hover-blue w3-large" style="width: 100%" id="sign_in">Sign In</div>
+      </center>
     </div>
     <div id="messenger">
       <div id="messages" onmouseover="$('#clipboard').stop();$('#clipboard').animate({left: '80vw'})"></div>

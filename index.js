@@ -28,12 +28,12 @@ var names = [];
 var messages = [];
 
 io.on('connection', function(socket){
-	socket.on('new user', function(session_id) {
+	socket.on('new user', function(name) {
 		// If user has no existing cookie - i.e. new user
-		var name = "Anon" + Math.floor((Math.random()*1000)+1);
-		while (names.indexOf(name) >= 0) {
-			name = "Anon" + Math.floor((Math.random()*1000)+1);
-		}
+		//var name = "Anon" + Math.floor((Math.random()*1000)+1);
+		//while (names.indexOf(name) >= 0) {
+		//	name = "Anon" + Math.floor((Math.random()*1000)+1);
+		//}
 		let userData = new User(name);
 
 		// Puts the user information into cookie

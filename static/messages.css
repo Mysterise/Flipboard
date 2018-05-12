@@ -28,6 +28,21 @@
   top: 20px;
 }
 
+#login_screen {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 30vw;
+  height: 70vh;
+}
+
+#messenger {
+  display: none;
+}
+
 .chat {
   border: solid 0px #EEE;
   display: flex;

@@ -2,13 +2,22 @@
 $(function () {
 
     var socket = io();
-    if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
-        //console.log("THERE IS NO COOKIE NIGGA");
-        socket.emit('new user');
-    } else {
-        //console.log("THERE IS A COOKIE NIGGA");
-        socket.emit('existing user', JSON.parse($.cookie('user')));
-    }
+
+    $("#sign_in").click(function() {
+        var name = $('#login_name').val();
+
+        //if ($.cookie('user') == null || $.cookie('user') == 'AnonNaN') {
+            //console.log("THERE IS NO COOKIE NIGGA");
+            socket.emit('new user', name);
+        //} else {
+            //console.log("THERE IS A COOKIE NIGGA");
+        //    socket.emit('existing user', JSON.parse($.cookie('user')));
+        //}
+        $("#login_screen").fadeOut(300);
+        setTimeout(function() {
+            $("#messenger").fadeIn(300);
+        }, 300);
+    })
 
     // Submitting a post/chat
     $('form').submit(function() {
