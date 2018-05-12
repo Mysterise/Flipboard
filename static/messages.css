@@ -10,6 +10,24 @@
   z-index: 0;
 }
 
+#clipboard .label {
+  position: absolute;
+  z-index: 20;
+  border-bottom: 2px solid grey;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  display: table;
+}
+
+#clipboard_name {
+  position: relative;
+  font-family: "Helvetica";
+  font-size: 30px;
+  left: 20px;
+  top: 20px;
+}
+
 .chat {
   border: solid 0px #EEE;
   display: flex;
@@ -132,3 +150,10 @@
   background: white;
   border-bottom-left-radius: 10px;
 }*/
+
+.noselect {
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+}
