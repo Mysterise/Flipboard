@@ -1,10 +1,10 @@
 # Flipboard - 2018 Facebook Sydney Hackathon Project
 
 ## Team Members
-[@Mysterise](https://github.com/Mysterise) Tony Zichao Tang<br>
-[@Friedpanseller](https://github.com/Friedpanseller) Leo Liu<br>
 [@ken7y](https://github.com/ken7y) Ken Wang<br>
 [@dystopicc](https://github.com/dystopicc) Samuel Zhang
+[@Friedpanseller](https://github.com/Friedpanseller) Leo Liu<br>
+[@Mysterise](https://github.com/Mysterise) Tony Zichao Tang<br>
 
 ## Description
 
