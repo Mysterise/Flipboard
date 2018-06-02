@@ -2,9 +2,9 @@
 
 ## Team Members
 [@ken7y](https://github.com/ken7y) Ken Wang<br>
-[@dystopicc](https://github.com/dystopicc) Samuel Zhang
+[@dystopicc](https://github.com/dystopicc) Samuel Zhang<br>
 [@Friedpanseller](https://github.com/Friedpanseller) Leo Liu<br>
-[@Mysterise](https://github.com/Mysterise) Tony Zichao Tang<br>
+[@Mysterise](https://github.com/Mysterise) Tony Zichao Tang
 
 ## Description
 
